@@ -1,0 +1,70 @@
+{% extends "appadmin/base.html" %}
+
+{% block main_body %}
+      <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        User management
+
+      </h1>
+
+    </section>
+
+    <!-- Main content -->
+    <section class="content container-fluid">
+
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+                <h2 class="box-title"> <span class="glyphicon glyphicon-calendar" aria-hidden="true">Edit user information</span></h2>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form class="form-horizontal" action="{% url 'appadmin_user_update' user.id %}" method="post">
+              {% csrf_token %}
+              <div class="box-body">
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-2 control-label">Username：</label>
+
+                  <div class="col-sm-4">
+                    <input type="text" name="username" value="{{ user.username }}" class="form-control" id="inputEmail3" placeholder="username">
+                  </div>
+                </div>
+                    <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Status：</label>
+                <div class="controls">
+                  &nbsp; &nbsp;
+                  <input type="radio" name="status" class="input-xlarge" value="1"
+                  {% if user.status == 1 %}checked{% endif %} /> Active
+                   &nbsp; &nbsp;
+                  <input type="radio" name="status" class="input-xlarge" value="2"
+                  {% if user.status == 2 %}checked{% endif %} /> Disabled
+                   &nbsp; &nbsp;
+                  <input type="radio" name="status" class="input-xlarge" value="6"
+                  {% if user.status == 6 %}checked{% endif %} /> Administrator
+                </div>
+              </div>
+              </div>
+
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <button type="submit" class="btn btn-primary">Submit</button> &nbsp;
+                  <button type="submit" class="btn btn-default">Reset</button>
+                <div class="col-sm-offset-2 col-sm-10">
+              </div>
+                </div>
+              <!-- /.box-footer -->
+                </div>
+            </form>
+
+
+          </div>
+          <!-- /.box -->
+        </div>
+      </div>
+
+    </section>
+    <!-- /.content -->
+{% endblock %}
