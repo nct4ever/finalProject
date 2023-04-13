@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.http import HttpResponse
 from datetime import datetime
+from django.db.models import Q
 from appadmin.models import User
 import hashlib, random
 
@@ -23,6 +24,8 @@ def index(request, pIndex=1):
         ulist = ulist.filter(username__contains=kw)
         mywhere.append('keyword='+kw) #Encapsulated search criteria
 
+
+    ulist = ulist.order_by("status")
     pIndex = int(pIndex)
     page = Paginator(ulist, 10)  # Paging with every 10 data items
     maxpages = page.num_pages  # Get maximum number of pages

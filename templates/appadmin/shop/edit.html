@@ -1,0 +1,108 @@
+{% extends "appadmin/base.html" %}
+
+
+{% block main_body %}
+    <!-- Content Header (Page header) -->
+      <section class="content-header">
+      <h1>
+        Product Management
+        <small>New Fashion back-end management</small>
+      </h1>
+
+
+    <!-- Main content -->
+    <section class="content container-fluid">
+
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+                <h2 class="box-title"> <span class="glyphicon glyphicon-calendar" aria-hidden="true">Edit Product Information</span></h2>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form class="form-horizontal" action="{% url 'appadmin_product_update' product.id %}" method="post" enctype="multipart/form-data">
+              <input type="hidden" name="oldpic" value="{{ product.picture }}" />
+              {% csrf_token %}
+              <div class="box-body">
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-2 control-label">Category：</label>
+                  <div class="col-sm-4">
+                    <select name="category_id" id="category_id" class="form-control select2" style="width: 100%;">
+                        {% for cvo in categorylist %}
+                        <option value="{{ cvo.id }}" {% if cvo.id == product.category_id %} selected {% endif %}>{{ cvo.category_name }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-2 control-label">Product name：</label>
+                  <div class="col-sm-4">
+                    <input type="text" name="name" value="{{ product.product_name }}"  class="form-control" id="inputText3" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-2 control-label">Price：</label>
+                  <div class="col-sm-4">
+                    <input type="text" name="price" value="{{ product.price }}" class="form-control" id="inputText3" />
+                  </div>
+                </div>
+               <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-2 control-label">Delivery：</label>
+                  <div class="col-sm-4">
+                    <input type="text" name="delivery" value="{{ product.delivery}}" class="form-control" id="inputText3" />
+                  </div>
+                </div>
+              <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-2 control-label">Description：</label>
+                  <div class="col-sm-4">
+                    <input type="text" name="info" value="{{ product.product_info }}"  class="form-control" id="inputText3" />
+                  </div>
+                </div>
+              <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-2 control-label">Status：</label>
+                  <div class="controls">
+                  &nbsp; &nbsp;
+                  <input type="radio" name="status" class="input-xlarge" value="1"
+                  {% if product.status == 1 %}checked{% endif %} /> Selling
+                   &nbsp; &nbsp;
+                  <input type="radio" name="status" class="input-xlarge" value="2"
+                  {% if product.status == 2 %}checked{% endif %} /> Sold out
+
+                         &nbsp; &nbsp;
+                  <input type="radio" name="status" class="input-xlarge" value="3"
+                  {% if product.status == 3 %}checked{% endif %} /> Sale
+
+                </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">Product picture：</label>
+                  <div class="col-sm-4">
+                    <input type="file" name="picture" /><br/>
+                    <img src="/static/web/{{ product.picture }}" width="200"/>
+                  </div>
+                </div>
+
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <button type="submit" class="btn btn-primary">Submit</button> &nbsp;
+                  <button type="reset" class="btn btn-default">Reset</button>
+                <div class="col-sm-offset-2 col-sm-10">
+              </div>
+                </div>
+              <!-- /.box-footer -->
+                </div>
+            </form>
+          </div>
+          <!-- /.box -->
+        </div>
+      </div>
+
+    </section>
+      </section>
+    <!-- /.content -->
+{% endblock %}
+

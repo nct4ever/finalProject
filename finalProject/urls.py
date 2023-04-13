@@ -22,4 +22,5 @@ urlpatterns = [
     path('appadmin/', include('appadmin.urls')),
     path('mobile/', include('mobile.urls')),
 
+
 ]

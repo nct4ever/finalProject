@@ -1,0 +1,93 @@
+{% extends "appadmin/base.html" %}
+
+
+{% block main_body %}
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Product Management
+        <small>New Fashion back-end management</small>
+      </h1>
+
+    </section>
+
+    <!-- Main content -->
+    <section class="content container-fluid">
+
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header">
+                <h2 class="box-title"> <span class="glyphicon glyphicon-calendar" aria-hidden="true">Add product Information</span></h2>
+            </div>
+            <!-- form start -->
+            <form class="form-horizontal" action="{% url 'appadmin_product_insert' %}" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+
+               <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-2 control-label">book category：</label>
+                  <div class="col-sm-4">
+                    <select name="category_id" id="category_id" class="form-control select2" style="width: 100%;">
+                        {% for cvo in categorylist %}
+                        <option value="{{ cvo.id }}">{{ cvo.category_name }}</option>
+                      {% endfor %}
+
+                    </select>
+                  </div>
+                </div>
+            <div class="box-body">
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-2 control-label">Size：</label>
+                  <div class="col-sm-4">
+                    <select name="size_id" id="size_id" class="form-control select2" style="width: 100%;">
+                      {% for svo in sizelist %}
+                        <option value="{{ svo.id }}">{{ svo.sizenum }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-2 control-label">Product name：</label>
+                  <div class="col-sm-4">
+                    <input type="text" name="name" class="form-control" id="inputText3" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-2 control-label">Description：</label>
+                  <div class="col-sm-4">
+                    <input type="text" name="info" class="form-control" id="inputText3" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-2 control-label">Price：</label>
+                  <div class="col-sm-4">
+                    <input type="text" name="price" class="form-control" id="inputText3" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">Product picture：</label>
+                  <div class="col-sm-4">
+                    <input type="file" name="picture" />
+                  </div>
+                </div>
+
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <button type="submit" class="btn btn-primary">Submit</button> &nbsp;
+                  <button type="submit" class="btn btn-default">Reset</button>
+                <div class="col-sm-offset-2 col-sm-10">
+              </div>
+                </div>
+              <!-- /.box-footer -->
+              </div>
+            </form>
+          </div>
+          <!-- /.box -->
+        </div>
+      </div>
+
+    </section>
+    <!-- /.content -->
+{% endblock %}

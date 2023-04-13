@@ -26,7 +26,7 @@ class Product(models.Model):
     product_info = models.CharField(max_length=255)  # information
     price = models.FloatField()
     picture = models.CharField(max_length=255)  # picture
-    size = models.CharField(max_length=50)
+    size = models.IntegerField()
     delivery = models.CharField(max_length=255)
     status = models.IntegerField(default=1)  #status
     category_id = models.IntegerField()  # category id
@@ -39,3 +39,29 @@ class Product(models.Model):
 
     class Meta:
         db_table = "product"
+
+
+
+#Category Model
+class Category(models.Model):
+    category_name = models.CharField(max_length=255)  # category name
+
+
+    def toDict(self):
+        return {'id': self.id, 'category_name': self.category_name}
+
+    class Meta:
+        db_table = "category"  # change table name
+
+
+
+#Size Model
+class Size(models.Model):
+    sizenum = models.CharField(max_length=50)  # category name
+
+
+    def toDict(self):
+        return {'id': self.id, 'sizenum': self.sizenum}
+
+    class Meta:
+        db_table = "sizeguide"  # change table name
