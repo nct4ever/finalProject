@@ -22,6 +22,12 @@ class ShopMiddleware:
                 # Redirect to login page
                 return redirect(reverse("appadmin_login"))
                 #pass
+                # Judgement on frontend user login requests to determine if they are logged in (whether there is a webuser in the session)
+        if re.match(r'^/web', path):
+                # Determine if you are logged in or not (because there is no adminuser in the session)
+            if 'webuser' not in request.session:
+                 # Redirect to login page
+                return redirect(reverse("web_login"))
 
         response = self.get_response(request)
         # Code to be executed for each request/response after

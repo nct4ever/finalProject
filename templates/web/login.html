@@ -69,24 +69,39 @@ a {
 </head>
 <body>
 
-<form action="/action_page.php">
+<form action="{% url 'web_dologin' %}" method="post">
+    {% csrf_token %}
   <div class="container">
-    <h1>Register</h1>
-    <p>Please fill in this form to create an account.</p>
+    <h1>Login</h1>
+    <p>Please fill in this form to login.</p>
     <hr>
+       <p class="login-box-msg" style="color:red">
+           {% if request.GET.errinfo == '1' %}
+               请选择所在的店铺名称！
+           {% elif request.GET.errinfo == '2' %}
+               验证码错误！
+           {% elif request.GET.errinfo == '3' %}
+               登录账号不存在
+           {% elif request.GET.errinfo == '4' %}
+               无效的登录账号！
+           {% elif request.GET.errinfo == '5' %}
+               登录密码错误！
+           {% endif %}
+       </p>
 
     <label for="email"><b>Email</b></label>
     <input type="text" placeholder="Enter Email" name="email" id="email" required>
 
     <label for="psw"><b>Password</b></label>
-    <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
+    <input type="password" placeholder="Enter Password" name="pwd" id="pwd" required>
 
-    <label for="psw-repeat"><b>Repeat Password</b></label>
-    <input type="password" placeholder="Repeat Password" name="psw-repeat" id="psw-repeat" required>
+      <label for="psw-repeat"><b>Verification</b></label></br>
+    <input type="text" style="width:350px" placeholder="Verification code" name="verify" id="verify" required>
+         <img src="{% url 'web_verify' %}" onclick="this.src='{% url 'web_verify' %}?sn='+Math.random()" style="margin:0px 20px;" />
     <hr>
 
 
-    <button type="submit" class="registerbtn">Register</button>
+    <button type="submit" class="registerbtn">Login</button>
   </div>
 
   <div class="container signin">

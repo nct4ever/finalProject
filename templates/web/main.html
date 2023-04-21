@@ -167,6 +167,7 @@ body {
 <header class="w3-bar w3-top w3-hide-large w3-black w3-xlarge">
   <div class="w3-bar-item w3-padding-24 w3-wide">New Fashion</div>
   <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding-24 w3-right" onclick="w3_open()"><i class="fa fa-bars"></i></a>
+
 </header>
 
 <!-- Overlay effect when opening sidebar on small screens -->
@@ -183,11 +184,11 @@ body {
   <!-- Top header -->
 
   <header class="w3-container w3-xlarge">
-
-    <p class="w3-left"> {{ request.session.webuser.username }}</p>
-
+      <div class="w3-bar  ">
+ <a href="{% url 'web_index' %}" class="w3-bar-item w3-button" style="font-size: 25px">Home</a>
     <p class="w3-right">
-      <a href="{% url 'web_cart' %}"> <i class="fa fa-shopping-cart w3-margin-right"></i></a>
+
+       <a href="{% url 'web_cart' %}"> <i class="fa fa-shopping-cart w3-margin-right"></i></a>
          <div class="dropdown">
      <i class="fa fa-user w3-margin-right" style="width:auto;"></i>
     <div class="dropdown-content">
@@ -196,86 +197,20 @@ body {
       <a href="#">My Order</a>
          <a href="{% url 'web_logout' %}">Logout</a>
 
+</div>
     </div>
 
   </div>
 
-  <div class="search-container" style="margin:-60px 10px 20px 670px; ">
-     <form>
-       <p><input class="w3-input w3-border" type="text" placeholder="Search" name="Name" required></p>
-     </form>
-  </div>
+ </p>
 
-    </p>
   </header>
 
-  <!-- Image header -->
-  <div class="w3-display-container w3-container">
-    <img src="/static/web/1.jpeg" alt="Jeans" style="width:100%">
-    <div class="w3-display-topleft w3-text-white" style="padding:24px 48px">
-      <h1 class="w3-jumbo w3-hide-small">New arrivals</h1>
-      <h1 class="w3-hide-large w3-hide-medium">New arrivals</h1>
-
-      <p><a href="#jeans" class="w3-button w3-black w3-padding-large w3-large">SHOP NOW</a></p>
+   <div class="content">
+       {% block main %}
+     {% endblock %}
     </div>
-  </div>
 
-  <div class="w3-container w3-text-grey" id="jeans">
-   <p style="text-align:right;">8 items</p>
-          <div class="w3-container" style="text-align:left; height:50px; margin-top:-30px; " >
-      <div class="w3-dropdown-hover">
-    <button class="w3-button w3-black" >Dropdown</button>
-    <div class="w3-dropdown-content w3-bar-block w3-card w3-light-grey" id="myDIV">
-        <p><input class="w3-input w3-border" type="text" placeholder="Name" name="Name" required></p>
-
-
-      <a class="w3-bar-item w3-button" href="#about">About</a>
-      <a class="w3-bar-item w3-button" href="#base">Base</a>
-      <a class="w3-bar-item w3-button" href="#blog">Blog</a>
-      <a class="w3-bar-item w3-button" href="#contact">Contact</a>
-      <a class="w3-bar-item w3-button" href="#custom">Custom</a>
-      <a class="w3-bar-item w3-button" href="#support">Support</a>
-      <a class="w3-bar-item w3-button" href="#tools">Tools</a>
-    </div>
-  </div>
-
-
-
-</div>
-
-
-
-
-  {% for key,category in categorylist %}
-    <div class="w3-container w3-padding">
-      <div class="w3-row-padding" style="margin:0 -16px">
-        {% for product in category.pids %}
-        <div class="w3-col l3 s6">
-          <div class="w3-display-container">
-            <img src="/static/web/{{ product.picture }}" style="width:100%">
-            <span class="w3-tag w3-display-topleft">New</span>
-            <div class="w3-display-middle w3-display-hover">
-              <a href="{% url 'web_cart_add' product.id %}"><button class="w3-button w3-black">Buy now <i class="fa fa-shopping-cart"></i></button></a>
-            </div>
-          </div>
-          <p>{{ product.product_name }}<br><b>£{{ product.price }}</b></p>
-        </div>
-        {% endfor %}
-      </div>
-    </div>
-  {% endfor %}
-  </div>
-
-
-
-
-  <!-- Subscribe section -->
-  <div class="w3-container w3-black w3-padding-32">
-    <h1>Subscribe</h1>
-    <p>To get special offers and VIP treatment:</p>
-    <p><input class="w3-input w3-border" type="text" placeholder="Enter e-mail" style="width:100%"></p>
-    <button type="button" class="w3-button w3-red w3-margin-bottom">Subscribe</button>
-  </div>
 
   <!-- Footer -->
   <footer class="w3-padding-64 w3-light-grey w3-small w3-center" id="footer">
