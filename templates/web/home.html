@@ -141,24 +141,14 @@ body {
     <i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-display-topright"></i>
     <h3 class="w3-wide"><b>New Fashion</b></h3>
   </div>
+
   <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
-    <a href="#" class="w3-bar-item w3-button">Shirts</a>
-    <a href="#" class="w3-bar-item w3-button">Dresses</a>
-    <a onclick="myAccFunc()" href="javascript:void(0)" class="w3-button w3-block w3-white w3-left-align" id="myBtn">
-      Jeans <i class="fa fa-caret-down"></i>
-    </a>
-    <div id="demoAcc" class="w3-bar-block w3-hide w3-padding-large w3-medium">
-      <a href="#" class="w3-bar-item w3-button w3-light-grey"><i class="fa fa-caret-right w3-margin-right"></i>Skinny</a>
-      <a href="#" class="w3-bar-item w3-button">Relaxed</a>
-      <a href="#" class="w3-bar-item w3-button">Bootcut</a>
-      <a href="#" class="w3-bar-item w3-button">Straight</a>
-    </div>
-    <a href="#" class="w3-bar-item w3-button">Jackets</a>
-    <a href="#" class="w3-bar-item w3-button">Gymwear</a>
-    <a href="#" class="w3-bar-item w3-button">Blazers</a>
-    <a href="#" class="w3-bar-item w3-button">Shoes</a>
+  {% for key,category in categorylist %}
+        <a href="{% url 'web_category_index' 1 %}?category_id={{ category.id }}" class="w3-bar-item w3-button">{{ category.name }}</a>
+   {% endfor %}
   </div>
-  <a href="#footer" class="w3-bar-item w3-button w3-padding">Contact</a>
+
+  <a href="" class="w3-bar-item w3-button w3-padding">Contact</a>
   <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding" onclick="document.getElementById('newsletter').style.display='block'">Newsletter</a>
   <a href="{% url 'appadmin_index' %}"  class="w3-bar-item w3-button w3-padding">Admin</a>
 </nav>
@@ -183,16 +173,15 @@ body {
   <!-- Top header -->
 
   <header class="w3-container w3-xlarge">
-
-    <p class="w3-left"> {{ request.session.webuser.username }}</p>
+      <p  style="font-size:20px;margin: 30px 0px -60px 690px">welcome {{ request.session.webuser.username }}</p>
 
     <p class="w3-right">
       <a href="{% url 'web_cart' %}"> <i class="fa fa-shopping-cart w3-margin-right"></i></a>
          <div class="dropdown">
-     <i class="fa fa-user w3-margin-right" style="width:auto;"></i>
+     <i class="fa fa-user w3-margin-right" style="width:auto"></i>
     <div class="dropdown-content">
         <a href="{% url 'web_login' %}">Login</a>
-      <a href="#">Account</a>
+      <a href="{% url 'web_account' %}">Account</a>
       <a href="#">My Order</a>
          <a href="{% url 'web_logout' %}">Logout</a>
 
@@ -200,15 +189,14 @@ body {
 
   </div>
 
-  <div class="search-container" style="margin:-60px 10px 20px 670px; ">
-     <form>
-       <p><input class="w3-input w3-border" type="text" placeholder="Search" name="Name" required></p>
+  <div class="search-container" style="margin:-60px 10px 20px 0px; ">
+     <form action="{% url 'web_search_index' 1 %}" method="get">
+       <p><input class="w3-input w3-border" type="text" placeholder="Search"  name="keyword" required></p>
      </form>
   </div>
 
     </p>
   </header>
-
   <!-- Image header -->
   <div class="w3-display-container w3-container">
     <img src="/static/web/1.jpeg" alt="Jeans" style="width:100%">
@@ -227,11 +215,9 @@ body {
     <button class="w3-button w3-black" >Dropdown</button>
     <div class="w3-dropdown-content w3-bar-block w3-card w3-light-grey" id="myDIV">
         <p><input class="w3-input w3-border" type="text" placeholder="Name" name="Name" required></p>
-
-
-      <a class="w3-bar-item w3-button" href="#about">About</a>
-      <a class="w3-bar-item w3-button" href="#base">Base</a>
-      <a class="w3-bar-item w3-button" href="#blog">Blog</a>
+      <a class="w3-bar-item w3-button" href="#about">New product</a>
+      <a class="w3-bar-item w3-button" href="#base">Male</a>
+      <a class="w3-bar-item w3-button" href="#blog">High price</a>
       <a class="w3-bar-item w3-button" href="#contact">Contact</a>
       <a class="w3-bar-item w3-button" href="#custom">Custom</a>
       <a class="w3-bar-item w3-button" href="#support">Support</a>
@@ -245,37 +231,38 @@ body {
 
 
 
-
-  {% for key,category in categorylist %}
-    <div class="w3-container w3-padding">
-      <div class="w3-row-padding" style="margin:0 -16px">
-        {% for product in category.pids %}
-        <div class="w3-col l3 s6">
-          <div class="w3-display-container">
-            <img src="/static/web/{{ product.picture }}" style="width:100%">
-            <span class="w3-tag w3-display-topleft">New</span>
-            <div class="w3-display-middle w3-display-hover">
-              <a href="{% url 'web_cart_add' product.id %}"><button class="w3-button w3-black">Buy now <i class="fa fa-shopping-cart"></i></button></a>
-            </div>
-          </div>
-          <p>{{ product.product_name }}<br><b>£{{ product.price }}</b></p>
+{% for key,category in categorylist %}
+<div class="w3-container w3-padding">
+  <div class="w3-row-padding" style="margin:0 -16px">
+    {% for product in category.pids %}
+    <div class="w3-col l4 s6">
+      <div class="w3-display-container">
+        <img src="/static/web/{{ product.picture }}" style="width:100%">
+        <span class="w3-tag w3-display-topleft">New</span>
+        <div class="w3-display-middle w3-display-hover">
+          <a href="{% url 'web_cart_add' product.id %}"><button class="w3-button w3-black">Buy now <i class="fa fa-shopping-cart"></i></button></a>
         </div>
-        {% endfor %}
       </div>
+      <a href="{% url 'web_detail' 1 %}?product_id={{ product.id }}"><p>{{ product.product_name }}<br></a> <b>£{{ product.price }}</b></p>
     </div>
-  {% endfor %}
+    {% endfor %}
   </div>
+</div>
+{% endfor %}
+</div>
+
 
 
 
 
   <!-- Subscribe section -->
+
   <div class="w3-container w3-black w3-padding-32">
-    <h1>Subscribe</h1>
-    <p>To get special offers and VIP treatment:</p>
-    <p><input class="w3-input w3-border" type="text" placeholder="Enter e-mail" style="width:100%"></p>
-    <button type="button" class="w3-button w3-red w3-margin-bottom">Subscribe</button>
+    <h1>RECOMMENDATIONS</h1>
+    <p>Want more personalized recommendations? Click here</p>
+   <a href="{% url 'web_recommend' %}"><button type="button" class="w3-button w3-red w3-margin-bottom">GO</button></a>
   </div>
+
 
   <!-- Footer -->
   <footer class="w3-padding-64 w3-light-grey w3-small w3-center" id="footer">
@@ -307,11 +294,10 @@ body {
 
       <div class="w3-col s4 w3-justify">
         <h4>Store</h4>
-        <p><i class="fa fa-fw fa-map-marker"></i> Company Name</p>
-        <p><i class="fa fa-fw fa-phone"></i> 0044123123</p>
-        <p><i class="fa fa-fw fa-envelope"></i> ex@mail.com</p>
+         <p><i class="fa fa-fw fa-map-marker"></i> swt</p>
+        <p><i class="fa fa-fw fa-envelope"></i> weitong.sun@students.plymouth.ac.uk</p>
         <h4>We accept</h4>
-        <p><i class="fa fa-fw fa-cc-amex"></i> Amex</p>
+        <p><i class="fa fa-fw fa-cc-paypal"></i> PayPal</p>
         <p><i class="fa fa-fw fa-credit-card"></i> Credit Card</p>
         <br>
         <i class="fa fa-facebook-official w3-hover-opacity w3-large"></i>

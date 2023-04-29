@@ -1,0 +1,61 @@
+{% extends 'web/main.html' %}
+{% load static %}
+{% block main %}
+    <style>
+.pagination {
+  display: inline-block;
+}
+
+.pagination a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  border: 1px solid #ddd;
+}
+
+.pagination a.active {
+  background-color: #03090c;
+  color: white;
+  border: 1px solid #03080a;
+}
+
+.pagination a:hover:not(.active) {background-color: #ddd;}
+
+.pagination a:first-child {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.pagination a:last-child {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+</style>
+
+    <div class="w3-container w3-padding">
+      <div class="w3-row-padding" style="margin:0 -16px">
+        {% for vo in productlist %}
+        <div class="w3-col l4 s6">
+          <div class="w3-display-container">
+            <img src="/static/web/{{ vo.picture }}" style="width:100%">
+            <span class="w3-tag w3-display-topleft">New</span>
+            <div class="w3-display-middle w3-display-hover">
+              <a href="{% url 'web_cart_add' vo.id %}"><button class="w3-button w3-black">Buy now <i class="fa fa-shopping-cart"></i></button></a>
+            </div>
+          </div>
+         <a href="{% url 'web_detail' 1 %}?product_id={{ vo.id }}"><p>{{ vo.product_name }}<br></a> <b>£{{ vo.price }}</b></p>
+        </div>
+        {% endfor %}
+      </div>
+
+<div class="pagination">
+  <a href="{% url 'web_category_index' pIndex|add:-1 %}?{{mywhere|join:'&'}}">&laquo;</a>
+    {% for p in plist %}
+  <a {% if pIndex == p %}class="active"{% endif %} href="{% url 'web_category_index' p %}">{{ p }}</a>
+    {% endfor %}
+  <a href="{% url 'web_category_index' pIndex|add:1 %}?{{mywhere|join:'&'}}">&raquo;</a>
+</div>
+    </div>
+
+{% endblock %}

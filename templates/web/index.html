@@ -1,0 +1,17 @@
+{% extends 'web/main.html' %}
+{% load static %}
+{% block main %}
+ <div class="w3-container w3-black w3-padding-32">
+    <h1>RECOMMENDATIONS</h1>
+      <form method="post">
+    {% csrf_token %}
+    <p>Enter the clothes you are interested in. You'll get recommendations based on these product ratings!</p>
+    <p><input class="w3-input w3-border" type="text" id="product_name" name="product_name" placeholder="Enter clothes name" style="width:100%"></p>
+     <input type="submit" value="Submit">
+      </form>
+  </div>
+
+
+
+{% endblock %}
+

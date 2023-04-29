@@ -1,0 +1,60 @@
+{% extends 'web/main.html' %}
+{% load static %}
+{% block main %}
+    <style>
+    /* Apply styles to the unordered list */
+/* Apply styles to the table */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+/* Apply styles to the table head */
+thead {
+  background-color: #333;
+  color: #fff;
+}
+
+/* Apply styles to the table head cells */
+th {
+  padding: 10px;
+  text-align: left;
+}
+
+/* Apply styles to the table body cells */
+td {
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+/* Apply styles to the links */
+a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+}
+
+/* Apply styles to the links on hover */
+a:hover {
+  text-decoration: underline;
+}
+
+    </style>
+<table>
+  <thead>
+    <tr>
+      <th>Recommended Products for {{ product_name }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for recommendation in recommendations %}
+      <tr>
+        <td><a href="{% url 'web_detail' 1 %}">{{ recommendation }}</a></td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+{% endblock %}

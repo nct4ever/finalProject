@@ -1,0 +1,160 @@
+{% extends 'web/main.html' %}
+{% load static %}
+{% block main %}
+  <style>
+    /* Styles for the product details section */
+    .product-details {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      border: 1px solid #ccc;
+    }
+
+    .product-details img {
+      max-width: 250px;
+      margin-right: 20px;
+    }
+
+    .product-details h2 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .product-details p {
+      margin: 0;
+      font-size: 18px;
+      color: #555;
+    }
+
+
+    /* Styles for the comments section */
+    .comments {
+      margin-top: 20px;
+      padding: 20px;
+      border: 1px solid #ccc;
+    }
+
+    .comments h3 {
+      margin-top: 0;
+      font-size: 24px;
+    }
+
+    .comments ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .comments li {
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    /* Styles for the favorites section */
+    .favorites {
+      margin-top: 20px;
+      padding: 20px;
+      border: 1px solid #ccc;
+    }
+
+    .favorites h3 {
+      margin-top: 0;
+      font-size: 24px;
+    }
+
+    .favorites ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .favorites li {
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    /* Styles for the recommended items section */
+    .recommended {
+      margin-top: 20px;
+      padding: 20px;
+      border: 1px solid #ccc;
+    }
+
+    .recommended h3 {
+      margin-top: 0;
+      font-size: 24px;
+    }
+
+    .recommended ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .recommended li {
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+    .checked {
+  color: orange;
+}
+  </style>
+</head>
+<body>
+ {% for product in productlist %}
+  <div class="product-details">
+    <img src="/static/web/{{ product.picture }}" alt="Product Image">
+    <div>
+      <h2>{{ product.product_name }}</h2></br>
+      <p>{{ product.product_info }}</p></br>
+      <p>Price: ${{ product.price }}</p></br>
+        <label for="select-options" style="margin: 0;font-size: 18px;color: #555;">Choose Size:</label>
+
+   <select id="select-options"></br>
+        {% for zo in zlist %}
+  <option value="">{{ zo.sizenum}}</option></br>
+    {% endfor %}
+        </select></br>
+
+        <p>Delivery: ${{ product.delivery }}</p></br>
+        <a href="{% url 'web_cart_add' product.id %}"><button>Add to Cart</button></a>
+         <button>Add to Favorites</button>
+    </div>
+  </div>
+      {% endfor %}
+  <div class="comments">
+
+    <h3>Comments</h3>
+
+      {% for vo in rlist %}
+   <div class="comment-header">
+        <span class="username" style="font-size: medium;font-weight: bold">{{ vo.username }},</span>
+       <span class="date">{{ vo.create_time}}</span>
+        <span class="fa fa-star checked" style="font-size: medium;font-weight:bold">&nbsp;{{ vo.rating }}&nbsp;Star</span>&nbsp;&nbsp;
+      </div>
+      <div class="comment-body">
+        <p>{{ vo.reviews}}.</p>
+      </div>
+    </li><li>
+    {% endfor %}
+
+    <form>
+      <input type="text" placeholder="Add a comment">
+      <button>Submit</button>
+
+    </form>
+  </div>
+
+
+  <div class="recommended">
+    <h3>You Might Also Like</h3>
+
+    <ul>
+        <li></li>
+
+    </ul>
+
+  </div>
+</body>
+
+
+
+{% endblock %}

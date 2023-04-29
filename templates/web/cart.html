@@ -103,11 +103,47 @@ span.price {
           Total <span class="price" style="color:black; font-size: large"><b>{{ request.session.sum }}</b></span>
 
         </p>
-        <a href=""><input type="submit" value="Continue to checkout" class="btn"></a>
+      <li class="list-group-item">
+          <b>Online payment: &nbsp; </b>
+          <input type="radio" name="bank" checked value="1"> paypal
+
+      </li>
+
+        <a href="{% url 'web_orders_index' 1 %}?member_id={{ request.session.webuser.id }}"><input type="submit" onclick="dosubmit()" value="Continue to checkout" class="btn"></a>
          <a href="{% url 'web_cart_clear' %}"><input type="submit" value="Clear" class="btn btn-info" ></a>
     </div>
 
   </div>
+
+    <script src="{% static 'web/js/jquery.min.js' %}"></script>
+    <script src="{% static 'web/js/bootstrap.min.js' %}"></script>
+    <script>
+       function dosubmit(){
+
+           if(!window.confirm("Are you sure you want to pay?")){
+               return;
+           }
+
+          var bank = $("input[name='bank']:checked").val();
+           $.ajax({
+            type:"get",
+            url:"{% url 'web_orders_insert' %}",
+            dataType:"text",
+            data:{bank:bank},
+            success:function(res){
+              if(res == "Y"){
+                window.location.href = "{% url 'web_orders_index' 1 %}";
+              }else{
+                alert("Order failed！");
+              }
+            }
+          });
+
+       }
+
+
+
+    </script>
 
 
 {% endblock %}

@@ -5,6 +5,9 @@ from datetime import datetime
 # Create your models here.
 
 # User Information Model
+
+
+
 class User(models.Model):
     username = models.CharField(max_length=50)  # user account
     password_hash = models.CharField(max_length=100)  # pwd
@@ -32,12 +35,13 @@ class Product(models.Model):
     delivery = models.CharField(max_length=255)
     status = models.IntegerField(default=1)  # status
     category_id = models.IntegerField()  # category id
+    sub_id = models.IntegerField(default=1)
 
     def toDict(self):
         return {'id': self.id, 'product_name': self.product_name, 'product_info': self.product_info,
                 'price': self.price,
                 'picture': self.picture, 'status': self.status,
-                'category_id': self.category_id, 'size': self.size, 'delivery': self.delivery}
+                'category_id': self.category_id, 'size': self.size, 'delivery': self.delivery, 'sub_id': self.sub_id}
 
     class Meta:
         db_table = "product"
@@ -66,7 +70,6 @@ class Size(models.Model):
 
 class Orders(models.Model):
     member_id = models.IntegerField() #会员id
-    user_id = models.IntegerField()   #操作员id
     money = models.FloatField()     #金额
     status = models.IntegerField(default=1)   #订单状态:1过行中/2无效/3已完成
     create_time = models.DateTimeField(default=datetime.now)  #创建时间
@@ -103,20 +106,44 @@ class Payment(models.Model):
 
 # Shipping Model
 class Shipping(models.Model):
-    order_id = models.IntegerField(default=1)
-    member_id = models.IntegerField(default=1)
-    date_added = models.DateTimeField(default=datetime.now)
-    order = models.IntegerField()
+    user_id = models.IntegerField(default=1)
     address = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
     state = models.CharField(max_length=255)
     zipcode = models.CharField(max_length=255)
 
     def toDict(self):
-        return {'id': self.id, 'order_id': self.order_id,'member_id': self.member_id, 'date_added': self.date_added, 'order': self.order,
-                'address': self.address, 'city': self.city, 'state': self.state, 'zipcode': self.zipcode}
+        return {'id': self.id, 'user_id': self.user_id,'address': self.address, 'city': self.city,
+                'state': self.state, 'zipcode': self.zipcode}
 
     class Meta:
         db_table = "shipping"  # change table name
+
+
+# subcategory Model
+class Subcategories(models.Model):
+    subname = models.CharField(max_length=255)  # category name
+    cate_id = models.IntegerField(default=1)
+
+    def toDict(self):
+        return {'id': self.id, 'subname': self.subname, 'cate_id': self.cate_id}
+
+    class Meta:
+        db_table = "subcategories"  # change table name
+
+
+
+class Rate(models.Model):
+    reviews = models.CharField(max_length=500)
+    rating = models.IntegerField(default=1)
+    user_id = models.IntegerField(default=1)
+    product_id = models.IntegerField(default=1)
+    create_time = models.DateTimeField(default=datetime.now)
+
+    def toDict(self):
+        return {'id': self.id, 'reviews': self.reviews,'rating': self.rating,'user_id': self.user_id, 'product_id': self.product_id,'create_time': self.create_time}
+
+    class Meta:
+        db_table = "rate"  # change table name
 
 

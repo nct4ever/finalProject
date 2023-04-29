@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import redirect
@@ -10,6 +11,13 @@ def index(request):
     return redirect(reverse("web_index"))
 
 def webindex(request):
+    # Try to get the shopping cart information from session with the name cartlist, if not return {}
+    cartlist = request.session.get('cartlist', {})
+    sum = 0  # Initialize a total amount
+    # Iterate through the items in the cart and total the total amount
+    for vo in cartlist.values():
+        sum += vo['num'] * vo['price']
+    request.session['sum'] = sum  # Put in session
     context = {'categorylist': request.session.get("categorylist", {}).items()}
     return render(request,"web/home.html", context)
 
@@ -55,7 +63,6 @@ def dologin(request):
                     categorylist[vo.id] = c
                 request.session['categorylist'] = categorylist
                 request.session['productlist'] = productlist
-                # 重定向到前台首页
                 return redirect(reverse("web_index"))
             else:
                 return redirect(reverse('web_login') + "?errinfo=5")
@@ -72,7 +79,6 @@ def logout(request):
 
 
 def verify(request):
-    '''生成验证码 '''
     # 引入随机函数模块
     import random
     from PIL import Image, ImageDraw, ImageFont
@@ -112,12 +118,7 @@ def verify(request):
     del draw
     # 存入session，用于做进一步验证
     request.session['verifycode'] = rand_str
-    """
-    python2的为
-    # 内存文件操作
-    import cStringIO
-    buf = cStringIO.StringIO()
-    """
+
     # 内存文件操作-->此方法为python3的
     import io
     buf = io.BytesIO()
